@@ -3,9 +3,9 @@ C:\Users\saeed\source\repos\Tic Tac Toe Game\bin\Debug\Tic Tac Toe Game.exe
 C:\Users\saeed\source\repos\Tic Tac Toe Game\bin\Debug\Tic Tac Toe Game.pdb
 C:\Users\saeed\source\repos\Tic Tac Toe Game\obj\Debug\Tic Tac Toe Game.csproj.AssemblyReference.cache
 C:\Users\saeed\source\repos\Tic Tac Toe Game\obj\Debug\Tic Tac Toe Game.csproj.SuggestedBindingRedirects.cache
-C:\Users\saeed\source\repos\Tic Tac Toe Game\obj\Debug\Tic_Tac_Toe_Game.Form1.resources
 C:\Users\saeed\source\repos\Tic Tac Toe Game\obj\Debug\Tic_Tac_Toe_Game.Properties.Resources.resources
 C:\Users\saeed\source\repos\Tic Tac Toe Game\obj\Debug\Tic Tac Toe Game.csproj.GenerateResource.cache
 C:\Users\saeed\source\repos\Tic Tac Toe Game\obj\Debug\Tic Tac Toe Game.csproj.CoreCompileInputs.cache
 C:\Users\saeed\source\repos\Tic Tac Toe Game\obj\Debug\Tic Tac Toe Game.exe
 C:\Users\saeed\source\repos\Tic Tac Toe Game\obj\Debug\Tic Tac Toe Game.pdb
+C:\Users\saeed\source\repos\Tic Tac Toe Game\obj\Debug\Tic_Tac_Toe_Game.MainForm.resources
