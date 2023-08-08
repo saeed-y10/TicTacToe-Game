@@ -19,232 +19,256 @@ namespace Tic_Tac_Toe_Game
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            Color White = Color.White;
+            Color White = Color.FromArgb(255, 255, 255, 255);
             Pen Pen = new Pen(White);
 
-            Pen.Width = 5;
+            Pen.Width = 10;
 
-            Pen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
-            Pen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
+            Pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
 
-            e.Graphics.DrawLine(Pen, 270, 170, 670, 170);
-            e.Graphics.DrawLine(Pen, 270, 290, 670, 290);
+            Pen.StartCap = System.Drawing.Drawing2D.LineCap.Square;
+            Pen.EndCap = System.Drawing.Drawing2D.LineCap.Square;
 
-            e.Graphics.DrawLine(Pen, 400, 70, 400, 380);
-            e.Graphics.DrawLine(Pen, 550, 70, 550, 380);
+            // Draw Horizental Lines
+            e.Graphics.DrawLine(Pen, 270, 160, 670, 160);
+            e.Graphics.DrawLine(Pen, 270, 280, 670, 280);
+
+            // Draw Vertical Lines
+            e.Graphics.DrawLine(Pen, 400, 70, 400, 375);
+            e.Graphics.DrawLine(Pen, 550, 70, 550, 375);
         }
 
-        private void ChangeCurrentPlayer()
+        enum enPlayer
         {
-            if (lbPlayer.Tag.ToString() == "X")
-            {
-                lbPlayer.Text = "Player 2";
-                lbPlayer.Tag = "O";
-            }
-
-            else
-            {
-                lbPlayer.Text = "Player 1";
-                lbPlayer.Tag = "X";
-            }
-
+            Player1,
+            Player2,
         }
 
-        private void EnableButtons()
+        enum enWinner
         {
-            pbBox1.Enabled = true;
-            pbBox2.Enabled = true;
-            pbBox3.Enabled = true;
-            pbBox4.Enabled = true;
-            pbBox5.Enabled = true;
-            pbBox6.Enabled = true;
-            pbBox7.Enabled = true;
-            pbBox8.Enabled = true;
-            pbBox9.Enabled = true;
+            Player1,
+            Player2,
+            Draw,
+            GameInProgress
         }
 
-        private void ResetImagesAndTagValue()
+        struct stGameResults
         {
-            pbBox1.Image = Properties.Resources.QuestionMark;
-            pbBox1.Tag = "Empty";
-
-            pbBox2.Image = Properties.Resources.QuestionMark;
-            pbBox2.Tag = "Empty";
-            
-            pbBox3.Image = Properties.Resources.QuestionMark;
-            pbBox3.Tag = "Empty";
-            
-            pbBox4.Image = Properties.Resources.QuestionMark;
-            pbBox4.Tag = "Empty";
-            
-            pbBox5.Image = Properties.Resources.QuestionMark;
-            pbBox5.Tag = "Empty";
-            
-            pbBox6.Image = Properties.Resources.QuestionMark;
-            pbBox6.Tag = "Empty";
-            
-            pbBox7.Image = Properties.Resources.QuestionMark;
-            pbBox7.Tag = "Empty";
-            
-            pbBox8.Image = Properties.Resources.QuestionMark;
-            pbBox8.Tag = "Empty";
-            
-            pbBox9.Image = Properties.Resources.QuestionMark;
-            pbBox9.Tag = "Empty";
+            public enWinner Winner;
+            public bool GameEnd;
+            public Byte GameCount;
         }
 
-        private void ResetButtons()
+        enPlayer PlayerTurn = enPlayer.Player1;
+        stGameResults GameResults;
+
+        private void ResetButton(Button btn)
         {
-            ResetImagesAndTagValue();
-            EnableButtons();
-        }
-
-        private void DisableButtons()
-        {
-            pbBox1.Enabled = false;
-            pbBox2.Enabled = false;
-            pbBox3.Enabled = false;
-            pbBox4.Enabled = false;
-            pbBox5.Enabled = false;
-            pbBox6.Enabled = false;
-            pbBox7.Enabled = false;
-            pbBox8.Enabled = false;
-            pbBox9.Enabled = false;
-        }
-
-        private string CheckAndGetWinnerLetter()
-        {
-            if (pbBox1.Tag.ToString() != "Empty")
-            {
-                if (pbBox1.Tag.ToString() == pbBox2.Tag.ToString() && pbBox1.Tag.ToString() == pbBox3.Tag.ToString())
-                    return Convert.ToString(pbBox1.Tag);
-
-                if (pbBox1.Tag.ToString() == pbBox4.Tag.ToString() && pbBox1.Tag.ToString() == pbBox7.Tag.ToString())
-                    return Convert.ToString(pbBox1.Tag);
-
-                if (pbBox1.Tag.ToString() == pbBox5.Tag.ToString() && pbBox1.Tag.ToString() == pbBox9.Tag.ToString())
-                    return Convert.ToString(pbBox1.Tag);
-            }
-
-            if (pbBox2.Tag.ToString() != "Empty")
-            {
-                if (pbBox2.Tag.ToString() == pbBox5.Tag.ToString() && pbBox2.Tag.ToString() == pbBox8.Tag.ToString())
-                    return Convert.ToString(pbBox2.Tag);
-            }
-
-            if (pbBox3.Tag.ToString() != "Empty")
-            {
-                if (pbBox3.Tag.ToString() == pbBox6.Tag.ToString() && pbBox3.Tag.ToString() == pbBox9.Tag.ToString())
-                    return Convert.ToString(pbBox3.Tag);
-
-                if (pbBox3.Tag.ToString() == pbBox5.Tag.ToString() && pbBox3.Tag.ToString() == pbBox7.Tag.ToString())
-                    return Convert.ToString(pbBox3.Tag);
-            }
-
-
-            if (pbBox4.Tag.ToString() != "Empty")
-            {
-                if (pbBox4.Tag.ToString() == pbBox5.Tag.ToString() && pbBox4.Tag.ToString() == pbBox6.Tag.ToString())
-                    return Convert.ToString(pbBox4.Tag);
-            }
-
-
-            if (pbBox7.Tag.ToString() != "Empty")
-            {
-                if (pbBox7.Tag.ToString() == pbBox8.Tag.ToString() && pbBox7.Tag.ToString() == pbBox9.Tag.ToString())
-                    return Convert.ToString(pbBox7.Tag);
-            }
-
-            return null;
-        }
-
-        private void pbBox_Click(object sender, MouseEventArgs e)
-        {
-            string Winner;
-
-            if (((PictureBox)sender).Tag.ToString() == "Empty")
-            {
-                if (lbPlayer.Tag.ToString() == "X")
-                {
-                    ((PictureBox)sender).Tag = "X";
-                    ((PictureBox)sender).Image = Properties.Resources.X;
-                }
-
-                else
-                {
-                    ((PictureBox)sender).Tag = "O";
-                    ((PictureBox)sender).Image = Properties.Resources.O;
-                }
-
-                if ((Winner = CheckAndGetWinnerLetter()) != null)
-                {
-                    lbWinner.Text = lbPlayer.Text.ToString();
-
-                    DisableButtons();
-
-                    MessageBox.Show("Winner is: " + Winner, "Game End", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    
-                    return;
-                }
-
-                ChangeCurrentPlayer();
-            }
-
-            else
-            {
-                MessageBox.Show("Worng Choice", "Worng", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void pbBox1_Click(object sender, EventArgs e)
-        {
-            pbBox_Click(sender, (System.Windows.Forms.MouseEventArgs)e);
-        }
-
-        private void pbBox2_Click(object sender, EventArgs e)
-        {
-            pbBox_Click(sender, (System.Windows.Forms.MouseEventArgs)e);
-        }
-
-        private void pbBox3_Click(object sender, EventArgs e)
-        {
-            pbBox_Click(sender, (System.Windows.Forms.MouseEventArgs)e);
-        }
-
-        private void pbBox4_Click(object sender, EventArgs e)
-        {
-            pbBox_Click(sender, (System.Windows.Forms.MouseEventArgs)e);
-        }
-
-        private void pbBox5_Click(object sender, EventArgs e)
-        {
-            pbBox_Click(sender, (System.Windows.Forms.MouseEventArgs)e);
-        }
-
-        private void pbBox6_Click(object sender, EventArgs e)
-        {
-            pbBox_Click(sender, (System.Windows.Forms.MouseEventArgs)e);
-        }
-
-        private void pbBox7_Click(object sender, EventArgs e)
-        {
-            pbBox_Click(sender, (System.Windows.Forms.MouseEventArgs)e);
-        }
-
-        private void pbBox8_Click(object sender, EventArgs e)
-        {
-            pbBox_Click(sender, (System.Windows.Forms.MouseEventArgs)e);
-        }
-
-        private void pbBox9_Click(object sender, EventArgs e)
-        {
-            pbBox_Click(sender, (System.Windows.Forms.MouseEventArgs)e);
+            btn.Image = Properties.Resources.QuestionMark;
+            btn.Tag = "?";
+            btn.BackColor = Color.Transparent;
+            btn.TabStop = true;
         }
 
         private void btnRestartGame_Click(object sender, EventArgs e)
         {
-            ResetButtons();
+            ResetButton(button1);
+            ResetButton(button2);
+            ResetButton(button3);
+            ResetButton(button4);
+            ResetButton(button5);
+            ResetButton(button6);
+            ResetButton(button7);
+            ResetButton(button8);
+            ResetButton(button9);
+
+            PlayerTurn = enPlayer.Player1;
+            lblPlayer.Text = "Player 1";
+            GameResults.GameEnd = false;
+            GameResults.GameCount = 0;
+            GameResults.Winner = enWinner.GameInProgress;
+            lblWinner.Text = "In Progress";
         }
 
+        void EndGame()
+        {
+            lblPlayer.Text = "Game Over";
+
+            switch (GameResults.Winner)
+            {
+                case enWinner.Player1:
+                    lblWinner.Text = "Player 1";
+                    break;
+
+                case enWinner.Player2:
+                    lblWinner.Text = "Player 2";
+                    break;
+
+                default:
+                    lblWinner.Text = "Draw";
+                    break;
+            }
+
+            MessageBox.Show("game over", "game over", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        bool CheckValues(Button btn1, Button btn2, Button btn3)
+        {
+            if (btn1.Tag.ToString() != "?" && btn1.Tag.ToString() == btn2.Tag.ToString() && btn1.Tag.ToString() == btn3.Tag.ToString())
+            {
+                btn1.BackColor = Color.GreenYellow;
+                btn2.BackColor = Color.GreenYellow;
+                btn3.BackColor = Color.GreenYellow;
+
+                if (btn1.Tag.ToString() == "X")
+                    GameResults.Winner = enWinner.Player1;
+
+                else
+                    GameResults.Winner = enWinner.Player2;
+
+                GameResults.GameEnd = true;
+                EndGame();
+                return true;
+            }
+
+            GameResults.GameEnd = false;
+            return false;
+        }
+
+        void CheckWinner()
+        {
+            // Check Rows
+            //-----------------------------
+
+            // Check Row 1
+            if (CheckValues(button1, button2, button3))
+                return;
+
+            // Check Row 2
+            if (CheckValues(button4, button5, button6))
+                return;
+
+            // Check Row 3
+            if (CheckValues(button7, button8, button9))
+                return;
+
+            // Check Cols
+            //-----------------------------
+
+            // Check Col 1
+            if (CheckValues(button1, button4, button7))
+                return;
+
+            // Check Col 2
+            if (CheckValues(button2, button5, button8))
+                return;
+
+            // Check Col 3
+            if (CheckValues(button3, button6, button9))
+                return;
+
+            // Check Diagonals
+            //-----------------------------
+
+            // Check Diagonal 1
+            if (CheckValues(button1, button5, button9))
+                return;
+
+            // Check Diagonal 2
+            if (CheckValues(button3, button5, button7))
+                return;
+        }
+
+        private void ChangeImage(Button btn)
+        {
+            if (btn.Tag.ToString() == "?")
+            {
+                switch (PlayerTurn)
+                {
+                    case enPlayer.Player1:
+                        btn.Image = Properties.Resources.X;
+                        PlayerTurn = enPlayer.Player2;
+                        lblPlayer.Text = "Player 2";
+                        GameResults.GameCount++;
+                        btn.Tag = "X";
+                        CheckWinner();
+                        break;
+
+                    case enPlayer.Player2:
+                        btn.Image = Properties.Resources.O;
+                        PlayerTurn = enPlayer.Player1;
+                        lblPlayer.Text = "Player 1";
+                        GameResults.GameCount++;
+                        btn.Tag = "O";
+                        CheckWinner();
+                        break;
+                }
+
+                btn.TabStop = false;
+            }
+
+            else
+            {
+                MessageBox.Show("wrong choice", "wrong", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            if (GameResults.GameCount == 9 && GameResults.Winner == enWinner.GameInProgress)
+            {
+                GameResults.GameEnd = true;
+                GameResults.Winner = enWinner.Draw;
+                EndGame();
+            }
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ChangeImage(button1);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ChangeImage(button2);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            ChangeImage(button3);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            ChangeImage(button4);
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            ChangeImage(button5);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            ChangeImage(button6);
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            ChangeImage(button7);
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            ChangeImage(button8);
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            ChangeImage(button9);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            GameResults.Winner = enWinner.GameInProgress;
+        }
     }
 }
