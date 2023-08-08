@@ -17,6 +17,10 @@ namespace Tic_Tac_Toe_Game
             InitializeComponent();
         }
 
+
+        enPlayer PlayerTurn = enPlayer.Player1;
+        stGameResults GameStatus;
+
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             Color White = Color.FromArgb(255, 255, 255, 255);
@@ -59,14 +63,11 @@ namespace Tic_Tac_Toe_Game
             public Byte GameCount;
         }
 
-        enPlayer PlayerTurn = enPlayer.Player1;
-        stGameResults GameResults;
-
         private void ResetButton(Button btn)
         {
             btn.Image = Properties.Resources.QuestionMark;
             btn.Tag = "?";
-            btn.BackColor = Color.Transparent;
+            btn.BackColor = Color.Black;
             btn.TabStop = true;
         }
 
@@ -84,9 +85,9 @@ namespace Tic_Tac_Toe_Game
 
             PlayerTurn = enPlayer.Player1;
             lblPlayer.Text = "Player 1";
-            GameResults.GameEnd = false;
-            GameResults.GameCount = 0;
-            GameResults.Winner = enWinner.GameInProgress;
+            GameStatus.GameEnd = false;
+            GameStatus.GameCount = 0;
+            GameStatus.Winner = enWinner.GameInProgress;
             lblWinner.Text = "In Progress";
         }
 
@@ -94,7 +95,7 @@ namespace Tic_Tac_Toe_Game
         {
             lblPlayer.Text = "Game Over";
 
-            switch (GameResults.Winner)
+            switch (GameStatus.Winner)
             {
                 case enWinner.Player1:
                     lblWinner.Text = "Player 1";
@@ -121,17 +122,17 @@ namespace Tic_Tac_Toe_Game
                 btn3.BackColor = Color.GreenYellow;
 
                 if (btn1.Tag.ToString() == "X")
-                    GameResults.Winner = enWinner.Player1;
+                    GameStatus.Winner = enWinner.Player1;
 
                 else
-                    GameResults.Winner = enWinner.Player2;
+                    GameStatus.Winner = enWinner.Player2;
 
-                GameResults.GameEnd = true;
+                GameStatus.GameEnd = true;
                 EndGame();
                 return true;
             }
 
-            GameResults.GameEnd = false;
+            GameStatus.GameEnd = false;
             return false;
         }
 
@@ -189,7 +190,7 @@ namespace Tic_Tac_Toe_Game
                         btn.Image = Properties.Resources.X;
                         PlayerTurn = enPlayer.Player2;
                         lblPlayer.Text = "Player 2";
-                        GameResults.GameCount++;
+                        GameStatus.GameCount++;
                         btn.Tag = "X";
                         CheckWinner();
                         break;
@@ -198,7 +199,7 @@ namespace Tic_Tac_Toe_Game
                         btn.Image = Properties.Resources.O;
                         PlayerTurn = enPlayer.Player1;
                         lblPlayer.Text = "Player 1";
-                        GameResults.GameCount++;
+                        GameStatus.GameCount++;
                         btn.Tag = "O";
                         CheckWinner();
                         break;
@@ -212,63 +213,19 @@ namespace Tic_Tac_Toe_Game
                 MessageBox.Show("wrong choice", "wrong", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            if (GameResults.GameCount == 9 && GameResults.Winner == enWinner.GameInProgress)
+            if (GameStatus.GameCount == 9 && GameStatus.Winner == enWinner.GameInProgress)
             {
-                GameResults.GameEnd = true;
-                GameResults.Winner = enWinner.Draw;
+                GameStatus.GameEnd = true;
+                GameStatus.Winner = enWinner.Draw;
                 EndGame();
             }
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button_Click(object sender, EventArgs e)
         {
-            ChangeImage(button1);
+            ChangeImage((Button) sender);
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            ChangeImage(button2);
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            ChangeImage(button3);
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            ChangeImage(button4);
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            ChangeImage(button5);
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            ChangeImage(button6);
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-            ChangeImage(button7);
-        }
-
-        private void button8_Click(object sender, EventArgs e)
-        {
-            ChangeImage(button8);
-        }
-
-        private void button9_Click(object sender, EventArgs e)
-        {
-            ChangeImage(button9);
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            GameResults.Winner = enWinner.GameInProgress;
-        }
     }
 }
